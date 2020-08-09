@@ -19,20 +19,34 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/toolbar_color"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
-
-            <androidx.appcompat.widget.AppCompatTextView
+            <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/posts"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:gravity="center_horizontal"/>
+                    android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/posts"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center_horizontal"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ic_reload"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/update"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="20dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:src="@drawable/ic_update"/>
+            </RelativeLayout>
 
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
-
     <include layout="@layout/activity_posts_content"/>
-
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

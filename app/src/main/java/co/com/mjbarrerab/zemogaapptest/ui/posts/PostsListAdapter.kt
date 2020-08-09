@@ -5,8 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import co.com.mjbarrerab.zemogaapptest.R
-import co.com.mjbarrerab.zemogaapptest.ktextensions.inflate
 import co.com.mjbarrerab.zemogaapptest.data.models.Post
+import co.com.mjbarrerab.zemogaapptest.ktextensions.inflate
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
@@ -36,7 +36,7 @@ class PostsListAdapter @Inject constructor() : RecyclerView.Adapter<PostsListVie
 
     override fun onBindViewHolder(holder: PostsListViewHolder, position: Int) {
         val item = postsList[position]
-        holder.bindViews(item.id!!, item.title!!)
+        holder.bindViews(item.id!!, item.title!!, item.isNewPost)
     }
 
     fun populatePostsList(list: MutableList<Post>) {

@@ -21,7 +21,12 @@ class PostsListViewHolder(v: View, postsListListener: PostsListListener) : Recyc
         mRecipesListListener.showSelectedPostDetails(adapterPosition)
     }
 
-    fun bindViews(id: Int, title: String) {
+    fun bindViews(id: Int, title: String, isNewPost: Boolean) {
+        if (isNewPost)
+            view.img_blue_circle.visibility = View.VISIBLE
+        else
+            view.img_blue_circle.visibility = View.INVISIBLE
+
         view.tv_title.text = title
     }
 }

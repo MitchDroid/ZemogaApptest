@@ -10,9 +10,10 @@ import co.com.mjbarrerab.zemogaapptest.ui.base.MvpView
 interface PostsListContract {
     interface Presenter : MvpView.BasePresenter<View> {
         fun requestGetPosts()
-        fun getFromDB()
+        fun getPostFromDB()
         fun goToItemaDetailsActivity(selectedItem: Post, context: Context)
         fun displayErrorHandling(error: Throwable)
+        fun deleteAllPostFromDB()
     }
 
     interface View : MvpView.BaseView {
@@ -21,6 +22,7 @@ interface PostsListContract {
         fun successPostsRequest(itemList: List<Post>)
         fun showErrorView(errorMessage: String?)
         fun showNoNetworkExceptionAlert(errorMessage: String?)
+        fun deleteAllDBContentSuccess(itemList: List<Post>)
     }
 
     interface Navigator : MvpView.Navigator {

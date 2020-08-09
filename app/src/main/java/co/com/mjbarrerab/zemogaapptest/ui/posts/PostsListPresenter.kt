@@ -40,7 +40,9 @@ class PostsListPresenter @Inject constructor(
         subscriptions.clear()
     }
 
-    override fun getFromDB() {
+    override fun getPostFromDB() {
+        checkViewAttached()
+        getMvpView()?.showLoading(true)
         val dbSubscription = dataSource.database.postDao().loadPosts()
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.ui())
@@ -50,6 +52,7 @@ class PostsListPresenter @Inject constructor(
                 Timber.e(it)
             }, onSuccess = {
                 if (it.isNotEmpty()) {
+                    Timber.d("======= TRAE DATOS DE BD")
                     getMvpView()?.successPostsRequest(it)
                     getMvpView()?.showLoading(false)
                 } else {
@@ -61,7 +64,6 @@ class PostsListPresenter @Inject constructor(
 
 
     override fun requestGetPosts() {
-        getMvpView()?.showLoading(true)
         val postsSubscription = dataManager.getPosts()
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.ui())
@@ -74,6 +76,9 @@ class PostsListPresenter @Inject constructor(
                 postsDao.deleteAllPosts()
                     .subscribeBy(onComplete = {
                         Timber.d("Posts  delete succeed")
+                        for(x in 0..20){
+                            it[x].isNewPost = true
+                        }
                         postsDao.insertPosts(it)
                             .subscribeBy(onComplete = {
                                 Timber.d("Posts  new records store succeed")
@@ -99,6 +104,30 @@ class PostsListPresenter @Inject constructor(
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun deleteAllPostFromDB() {
+        val dbSubscription = dataSource.database.postDao().loadPosts()
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
+            .unsubscribeOn(schedulerProvider.io())
+            .mapNetworkErrors()
+            .subscribeBy(onError = {
+                Timber.e(it)
+            }, onSuccess = {
+                if (it.isNotEmpty()) {
+                    val postsDao = dataSource.database.postDao()
+                    postsDao.deleteAllPosts()
+                        .subscribeBy(onComplete = {
+                            Timber.d("All Posts  deleted succeed")
+                            getMvpView()?.deleteAllDBContentSuccess(mutableListOf())
+                        }, onError = {error ->
+                            Timber.e(error)
+                        })
+                } else {
+                    getMvpView()?.showErrorView("No hay datos que borrar")
+                }
+            })
+        subscriptions.add(dbSubscription)
+    }
     /**
      * with exception classes mapped,
      * UI code for handling different scenarios is much cleaner and easy to maintain:

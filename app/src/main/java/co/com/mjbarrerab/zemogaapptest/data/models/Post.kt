@@ -7,6 +7,10 @@ import com.squareup.moshi.Json
 
 @Entity(tableName = "tb_posts")
 data class Post(
+
+    @ColumnInfo(name = "is_new_post")
+    var isNewPost: Boolean = false,
+
     @ColumnInfo(name = "post_user_id")
     @field:Json(name ="userId")
     var userId: Int?,

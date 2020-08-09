@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         tools:context=".ui.posts.PostsListActivity">
 
-    <ProgressBar
+    <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/progressbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,5 +43,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
     />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/nav_view"
+            android:src="@drawable/ic_delete"
+            android:contentDescription="@string/delete"
+            android:layout_margin="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

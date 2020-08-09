@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_posts.*
 import kotlinx.android.synthetic.main.activity_posts_content.*
 import javax.inject.Inject
 
-class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListListener {
+class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListListener, View.OnClickListener {
 
     @Inject
     lateinit var postsListPresenter: PostsListPresenter
@@ -41,8 +42,11 @@ class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListLi
         setupRecyclerView()
         postsListPresenter.attachView(this)
         postsListAdapter.setPostsListListener(this)
-        postsListPresenter.getFromDB()
-        deleteIcon = ContextCompat.getDrawable(this , R.drawable.ic_delete)!!
+        postsListPresenter.getPostFromDB()
+
+        fab.setOnClickListener(this)
+        ic_reload.setOnClickListener(this)
+        deleteIcon = ContextCompat.getDrawable(this, R.drawable.ic_delete)!!
         nav_view.setOnNavigationItemSelectedListener OnNavigationItemSelectedListener@{ item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
@@ -83,14 +87,23 @@ class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListLi
             ) {
                 val itemView = viewHolder.itemView
                 val iconMargin = (itemView.height - deleteIcon.intrinsicHeight) / 2
-                if (dX > 0){
+                if (dX > 0) {
                     swipeBackground.setBounds(itemView.left, itemView.top, dX.toInt(), itemView.bottom)
-                    deleteIcon.setBounds(itemView.left + iconMargin, itemView.top + iconMargin,
-                        itemView.left + iconMargin +deleteIcon.intrinsicWidth, itemView.bottom - iconMargin)
-                }else{
-                    swipeBackground.setBounds(itemView.right + dX.toInt(), itemView.top, itemView.right, itemView.bottom)
-                    deleteIcon.setBounds(itemView.right - iconMargin - deleteIcon.intrinsicWidth, itemView.top + iconMargin,
-                        itemView.right - iconMargin, itemView.bottom - iconMargin)
+                    deleteIcon.setBounds(
+                        itemView.left + iconMargin, itemView.top + iconMargin,
+                        itemView.left + iconMargin + deleteIcon.intrinsicWidth, itemView.bottom - iconMargin
+                    )
+                } else {
+                    swipeBackground.setBounds(
+                        itemView.right + dX.toInt(),
+                        itemView.top,
+                        itemView.right,
+                        itemView.bottom
+                    )
+                    deleteIcon.setBounds(
+                        itemView.right - iconMargin - deleteIcon.intrinsicWidth, itemView.top + iconMargin,
+                        itemView.right - iconMargin, itemView.bottom - iconMargin
+                    )
                 }
                 swipeBackground.draw(c)
                 c.save()
@@ -124,15 +137,17 @@ class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListLi
     }
 
     override fun showSelectedPostDetails(adapterPos: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(this, "POSICION $adapterPos", Toast.LENGTH_SHORT).show()
     }
 
     override fun successPostsRequest(itemList: List<Post>) {
+        if(mutableList.size > 0)
+            mutableList.clear()
         mutableList.addAll(itemList)
         postsListAdapter.populatePostsList(mutableList)
     }
 
-    override fun showErrorView(errorMessage : String?) {
+    override fun showErrorView(errorMessage: String?) {
         showErrorMessage(root_layout, errorMessage)
     }
 
@@ -151,6 +166,19 @@ class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListLi
     override fun onDestroy() {
         super.onDestroy()
         postsListPresenter.detachView()
+    }
+
+    override fun deleteAllDBContentSuccess(itemList: List<Post>) {
+        mutableList.clear()
+        mutableList.addAll(itemList)
+        postsListAdapter.populatePostsList(mutableList)
+    }
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.fab -> postsListPresenter.deleteAllPostFromDB()
+            R.id.ic_reload -> postsListPresenter.getPostFromDB()
+
+        }
     }
 
 }
