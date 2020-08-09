@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Zemoga App test</string>
+    <string name="title_home">ALL</string>
+    <string name="title_dashboard">FAVORITES</string>
+    <string name="posts">Posts</string>
+    <string name="lbl_post_title_sample">sunt aut facere repellat provident occaecati excepturi optio reprehenderit</string>
+    <string name="undo">Deshacer</string>
+</resources>
