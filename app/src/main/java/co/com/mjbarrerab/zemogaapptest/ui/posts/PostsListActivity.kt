@@ -6,14 +6,13 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import co.com.mjbarrerab.zemogaapptest.R
-import co.com.mjbarrerab.zemogaapptest.models.Post
+import co.com.mjbarrerab.zemogaapptest.data.models.Post
 import co.com.mjbarrerab.zemogaapptest.ui.base.activity.BaseMVPActivity
 import kotlinx.android.synthetic.main.activity_posts.*
 import kotlinx.android.synthetic.main.activity_posts_content.*
@@ -42,7 +41,7 @@ class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListLi
         setupRecyclerView()
         postsListPresenter.attachView(this)
         postsListAdapter.setPostsListListener(this)
-        postsListPresenter.requestGetPosts()
+        postsListPresenter.getFromDB()
         deleteIcon = ContextCompat.getDrawable(this , R.drawable.ic_delete)!!
         nav_view.setOnNavigationItemSelectedListener OnNavigationItemSelectedListener@{ item ->
             when (item.itemId) {
@@ -133,12 +132,12 @@ class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListLi
         postsListAdapter.populatePostsList(mutableList)
     }
 
-    override fun showErrorView() {
-        Toast.makeText(this, "UnExpected Error!", Toast.LENGTH_SHORT).show()
+    override fun showErrorView(errorMessage : String?) {
+        showErrorMessage(root_layout, errorMessage)
     }
 
-    override fun showNoNetworkExceptionAlert() {
-        Toast.makeText(this, "Network Error!", Toast.LENGTH_SHORT).show()
+    override fun showNoNetworkExceptionAlert(errorMessage: String?) {
+        showErrorMessage(root_layout, errorMessage)
     }
 
     override fun showLoading(show: Boolean) {

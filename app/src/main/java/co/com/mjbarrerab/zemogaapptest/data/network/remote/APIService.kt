@@ -1,9 +1,9 @@
-package co.com.mjbarrerab.zemogaapptest.network.remote
+package co.com.mjbarrerab.zemogaapptest.data.network.remote
 
 
 import co.com.mjbarrerab.zemogaapptest.BuildConfig
-import co.com.mjbarrerab.zemogaapptest.models.Post
-import co.com.mjbarrerab.zemogaapptest.models.Users
+import co.com.mjbarrerab.zemogaapptest.data.models.Post
+import co.com.mjbarrerab.zemogaapptest.data.models.Users
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

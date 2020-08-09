@@ -1,4 +1,4 @@
-package co.com.mjbarrerab.zemogaapptest.models
+package co.com.mjbarrerab.zemogaapptest.data.models
 
 import com.squareup.moshi.Json
 

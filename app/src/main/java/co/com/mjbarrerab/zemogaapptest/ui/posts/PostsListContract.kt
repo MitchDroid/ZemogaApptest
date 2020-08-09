@@ -1,7 +1,7 @@
 package co.com.mjbarrerab.zemogaapptest.ui.posts
 
 import android.content.Context
-import co.com.mjbarrerab.zemogaapptest.models.Post
+import co.com.mjbarrerab.zemogaapptest.data.models.Post
 import co.com.mjbarrerab.zemogaapptest.ui.base.MvpView
 
 /**
@@ -10,6 +10,7 @@ import co.com.mjbarrerab.zemogaapptest.ui.base.MvpView
 interface PostsListContract {
     interface Presenter : MvpView.BasePresenter<View> {
         fun requestGetPosts()
+        fun getFromDB()
         fun goToItemaDetailsActivity(selectedItem: Post, context: Context)
         fun displayErrorHandling(error: Throwable)
     }
@@ -18,8 +19,8 @@ interface PostsListContract {
         companion object
 
         fun successPostsRequest(itemList: List<Post>)
-        fun showErrorView()
-        fun showNoNetworkExceptionAlert()
+        fun showErrorView(errorMessage: String?)
+        fun showNoNetworkExceptionAlert(errorMessage: String?)
     }
 
     interface Navigator : MvpView.Navigator {

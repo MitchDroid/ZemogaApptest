@@ -1,10 +1,10 @@
-package co.com.mjbarrerab.zemogaapptest.network.manager
+package co.com.mjbarrerab.zemogaapptest.data.network.manager
 
 
 
-import co.com.mjbarrerab.zemogaapptest.models.Post
-import co.com.mjbarrerab.zemogaapptest.models.Users
-import co.com.mjbarrerab.zemogaapptest.network.remote.APIService
+import co.com.mjbarrerab.zemogaapptest.data.models.Post
+import co.com.mjbarrerab.zemogaapptest.data.models.Users
+import co.com.mjbarrerab.zemogaapptest.data.network.remote.APIService
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton

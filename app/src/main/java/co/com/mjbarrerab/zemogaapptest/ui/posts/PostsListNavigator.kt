@@ -1,7 +1,7 @@
 package co.com.mjbarrerab.zemogaapptest.ui.posts
 
 import android.content.Context
-import co.com.mjbarrerab.zemogaapptest.models.Post
+import co.com.mjbarrerab.zemogaapptest.data.models.Post
 import javax.inject.Inject
 
 /**

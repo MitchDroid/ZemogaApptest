@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
-import co.com.mjbarrerab.zemogaapptest.network.remote.exceptions.NetworkExceptions
+import co.com.mjbarrerab.zemogaapptest.data.network.remote.exceptions.NetworkExceptions
 
 import io.reactivex.Single
 import retrofit2.HttpException

@@ -2,6 +2,7 @@ package co.com.mjbarrerab.zemogaapptest.di.modules
 
 import android.app.Activity
 import android.content.Context
+import co.com.mjbarrerab.zemogaapptest.data.repository.DataSource
 import co.com.mjbarrerab.zemogaapptest.di.qualifier.ActivityContext
 import co.com.mjbarrerab.zemogaapptest.ui.posts.PostsListAdapter
 import co.com.mjbarrerab.zemogaapptest.ui.posts.PostsListContract
@@ -55,5 +56,11 @@ class ActivityModule(activity: Activity) {
 
     @Provides
     internal fun providePostListAdapter(): PostsListAdapter = PostsListAdapter()
+
+    @Provides
+    @Singleton
+    fun provideDataSource(): DataSource {
+        return DataSource(provideContext())
+    }
 
 }

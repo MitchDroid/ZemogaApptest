@@ -1,8 +1,8 @@
 package co.com.mjbarrerab.zemogaapptest.di.modules
 
-import co.com.mjbarrerab.zemogaapptest.network.manager.DataManager
-import co.com.mjbarrerab.zemogaapptest.network.remote.APIService
-import co.com.mjbarrerab.zemogaapptest.network.remote.factory.Factory
+import co.com.mjbarrerab.zemogaapptest.data.network.manager.DataManager
+import co.com.mjbarrerab.zemogaapptest.data.network.remote.APIService
+import co.com.mjbarrerab.zemogaapptest.data.network.remote.factory.Factory
 import dagger.Module
 import dagger.Provides
 
@@ -21,4 +21,6 @@ class NetworkModule {
     fun provideDataManager(): DataManager {
         return DataManager(latamAPIService())
     }
+
+
 }

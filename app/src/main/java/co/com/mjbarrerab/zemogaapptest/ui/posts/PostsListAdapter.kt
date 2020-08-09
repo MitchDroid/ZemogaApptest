@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import co.com.mjbarrerab.zemogaapptest.R
 import co.com.mjbarrerab.zemogaapptest.ktextensions.inflate
-import co.com.mjbarrerab.zemogaapptest.models.Post
+import co.com.mjbarrerab.zemogaapptest.data.models.Post
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 

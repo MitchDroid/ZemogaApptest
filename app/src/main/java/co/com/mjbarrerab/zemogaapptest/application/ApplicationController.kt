@@ -5,6 +5,7 @@ import co.com.mjbarrerab.zemogaapptest.BuildConfig
 import co.com.mjbarrerab.zemogaapptest.di.components.ApplicationComponent
 import co.com.mjbarrerab.zemogaapptest.di.components.DaggerApplicationComponent
 import co.com.mjbarrerab.zemogaapptest.di.modules.ApplicationModule
+import timber.log.Timber
 
 /**
  * Created by miller.barrera on 8/08/2020.
@@ -20,7 +21,7 @@ class ApplicationController: Application() {
         setup()
 
         if (BuildConfig.DEBUG) {
-            // Maybe TimberPlant etc.
+            Timber.plant(Timber.DebugTree())
         }
     }
 

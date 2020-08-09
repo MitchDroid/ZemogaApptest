@@ -1,4 +1,4 @@
-package co.com.mjbarrerab.zemogaapptest.network.remote.exceptions
+package co.com.mjbarrerab.zemogaapptest.data.network.remote.exceptions
 /**
  * Created by miller.barrera on 08/08/2020.
  */

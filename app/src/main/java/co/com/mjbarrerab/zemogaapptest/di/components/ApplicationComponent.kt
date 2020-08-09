@@ -14,7 +14,7 @@ import javax.inject.Singleton
 @ActivityScope
 @Component(modules = [ApplicationModule::class])
 interface ApplicationComponent {
-    //Inject all activities
+    //Inject Application
     fun inject(application: ApplicationController)
 
 

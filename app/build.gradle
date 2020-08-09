@@ -46,6 +46,15 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$x_runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$x_espresso"
 
+    //ROOM
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version" // For Kotlin use kapt instead of annotationProcessor
+    implementation "androidx.room:room-ktx:$room_version"
+    // optional - RxJava support for Room
+    implementation "androidx.room:room-rxjava2:$room_version"
+    // Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
+
     // dagger
     implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"

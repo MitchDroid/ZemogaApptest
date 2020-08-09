@@ -1,6 +1,7 @@
 package co.com.mjbarrerab.zemogaapptest.ui.base.activity
 
 import android.os.Bundle
+import android.view.View
 
 import android.view.WindowManager
 import androidx.annotation.LayoutRes
@@ -12,6 +13,7 @@ import co.com.mjbarrerab.zemogaapptest.di.components.DaggerActivityComponent
 import co.com.mjbarrerab.zemogaapptest.di.modules.ActivityModule
 import co.com.mjbarrerab.zemogaapptest.di.modules.NetworkModule
 import co.com.mjbarrerab.zemogaapptest.ui.base.MvpView
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_posts.*
 
 /**
@@ -51,6 +53,10 @@ abstract class BaseMVPActivity :
         mToolbar.setNavigationOnClickListener {
             onBackPressed()
         }
+    }
+
+    fun showErrorMessage(view: View, errorMessage: String?){
+        Snackbar.make(view, errorMessage.toString(), Snackbar.LENGTH_LONG).show()
     }
 
 }
