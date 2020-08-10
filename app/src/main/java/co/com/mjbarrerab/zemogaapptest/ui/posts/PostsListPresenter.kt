@@ -52,7 +52,7 @@ class PostsListPresenter @Inject constructor(
                 Timber.e(it)
             }, onSuccess = {
                 if (it.isNotEmpty()) {
-                    Timber.d("======= TRAE DATOS DE BD")
+                    Timber.d("======= GET POSTS FROM BD")
                     getMvpView()?.successPostsRequest(it)
                     getMvpView()?.showLoading(false)
                 } else {
@@ -76,7 +76,7 @@ class PostsListPresenter @Inject constructor(
                 postsDao.deleteAllPosts()
                     .subscribeBy(onComplete = {
                         Timber.d("Posts  delete succeed")
-                        for(x in 0..20){
+                        for(x in 0..19){
                             it[x].isNewPost = true
                         }
                         postsDao.insertPosts(it)
@@ -170,6 +170,21 @@ class PostsListPresenter @Inject constructor(
             })
         subscriptions.add(favoriteSubscription)
     }
+
+    override fun deletePostById(postId: Int?) {
+        checkViewAttached()
+        val favoriteSubscription = dataSource.database.postDao().deletePostById(postId)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
+            .unsubscribeOn(schedulerProvider.io())
+            .subscribeBy(onComplete = {
+                Timber.d("=======POST HAS BEEN DELETED AND TABLE UPDATED")
+            },onError = {
+                getMvpView()?.showErrorView(it.toString())
+            })
+        subscriptions.add(favoriteSubscription)
+    }
+
     /**
      * with exception classes mapped,
      * UI code for handling different scenarios is much cleaner and easy to maintain:

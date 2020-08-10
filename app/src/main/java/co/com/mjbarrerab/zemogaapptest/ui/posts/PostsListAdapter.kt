@@ -45,6 +45,10 @@ class PostsListAdapter @Inject constructor() : RecyclerView.Adapter<PostsListVie
         notifyDataSetChanged()
     }
 
+    fun getDeletedItem(viewHolder: PostsListViewHolder): Post{
+        removedItem = postsList[viewHolder.adapterPosition]
+        return removedItem
+    }
     fun removeItem(viewHolder: PostsListViewHolder){
         removedPosition = viewHolder.adapterPosition
         removedItem = postsList[viewHolder.adapterPosition]

@@ -50,6 +50,8 @@ interface PostsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUsers(posts: List<Users>): Completable
 
+    @Query("DELETE FROM tb_posts  where post_id = :id")
+    fun deletePostById(id: Int?): Completable
 
     @Query("DELETE FROM tb_posts")
     fun deleteAllPosts(): Completable

@@ -58,6 +58,7 @@ class FavoritesPresenter @Inject constructor(
                     getMvpView()?.showLoading(false)
                 } else {
                     Timber.d("======= ERROR NO TRAE DATOS DE FAVORITOS BD")
+                    getMvpView()?.showLoading(false)
                 }
             })
         subscriptions.add(dbSubscription)

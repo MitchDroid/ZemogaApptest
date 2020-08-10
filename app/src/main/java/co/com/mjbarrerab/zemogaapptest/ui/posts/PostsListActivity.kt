@@ -77,6 +77,8 @@ class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListLi
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int) {
+                val post = postsListAdapter.getDeletedItem(viewHolder as PostsListViewHolder)
+                postsListPresenter.deletePostById(post.id)
                 postsListAdapter.removeItem(viewHolder as PostsListViewHolder)
             }
 

@@ -17,6 +17,7 @@ interface PostsListContract {
         fun goToItemaDetailsActivity(selectedItem: Post, context: Context)
         fun displayErrorHandling(error: Throwable)
         fun deleteAllPostFromDB()
+        fun deletePostById(postId: Int?)
     }
 
     interface View : MvpView.BaseView {
