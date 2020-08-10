@@ -1,7 +1,7 @@
 # ZemogaApptest
 Zemoga app test
 
-# mvp-architecture-kotlin-dagger-2-retrofit-android
+# mvp-architecture-kotlin-dagger-2-retrofit-android-ROOM
 
 androkotlinandroid-mvp-flow
 Model–view–presenter (MVP) is a derivation of the model–view–controller (MVC) architectural pattern which mostly used for building user interfaces. In MVP, the presenter assumes the functionality of the “middle-man”. In MVP, all presentation logic is pushed to the presenter. Check here for MVVM
