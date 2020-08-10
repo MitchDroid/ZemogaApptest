@@ -8,6 +8,8 @@ Model–view–presenter (MVP) is a derivation of the model–view–controller 
 
 MVP Architecture with RxJava + Dagger2 + Retrofit2 +  using Kotlin. Includes
 
+# How to run
+- Download the code, build and run it!.. easy!
 
 # Libraries & Documents:
 - Dagger2: GitHub - google/dagger: A fast dependency injector for Android and Java.
