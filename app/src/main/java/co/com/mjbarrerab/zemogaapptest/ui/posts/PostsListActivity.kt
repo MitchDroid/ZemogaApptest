@@ -6,6 +6,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -18,9 +20,11 @@ import co.com.mjbarrerab.zemogaapptest.ui.base.activity.BaseMVPActivity
 import co.com.mjbarrerab.zemogaapptest.ui.favorites.FavoritesActivity
 import kotlinx.android.synthetic.main.activity_posts.*
 import kotlinx.android.synthetic.main.activity_posts_content.*
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
-class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListListener, View.OnClickListener {
+class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListListener,  View.OnClickListener {
 
     @Inject
     lateinit var postsListPresenter: PostsListPresenter
@@ -30,6 +34,8 @@ class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListLi
     private lateinit var deleteIcon: Drawable
     private var mutableList: MutableList<Post> = mutableListOf()
     private var swipeBackground: ColorDrawable = ColorDrawable(Color.parseColor("#FF0000"))
+    internal var textlength = 0
+    var arraySort: MutableList<Post> = mutableListOf()
 
     override fun getLayout(): Int {
         return R.layout.activity_posts
@@ -49,6 +55,30 @@ class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListLi
         fab.setOnClickListener(this)
         ic_reload.setOnClickListener(this)
         deleteIcon = ContextCompat.getDrawable(this, R.drawable.ic_delete)!!
+
+        mSearch.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                textlength = mSearch!!.text.length
+                arraySort.clear()
+                for (i in mutableList.indices) {
+                    if (textlength <= mutableList[i].title!!.length) {
+                        if (mutableList[i].title!!.toLowerCase(Locale.ROOT).trim().contains(
+                                mSearch!!.text.toString().toLowerCase(Locale.ROOT).trim { it <= ' ' })
+                        ) {
+                            arraySort.add(mutableList[i])
+                        }
+                    }
+                }
+                postsListAdapter.populatePostsList(arraySort)
+                setupRecyclerView()
+            }
+
+        })
+
 
         nav_view.setOnNavigationItemSelectedListener OnNavigationItemSelectedListener@{ item ->
             when (item.itemId) {
@@ -153,6 +183,7 @@ class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListLi
     override fun successPostsRequest(itemList: List<Post>) {
         if(mutableList.size > 0)
             mutableList.clear()
+        arraySort.addAll(itemList)
         mutableList.addAll(itemList)
         postsListAdapter.populatePostsList(mutableList)
     }
