@@ -3,8 +3,9 @@ Zemoga app test
 
 # mvp-architecture-kotlin-dagger-2-retrofit-android-ROOM
 
-androkotlinandroid-mvp-flow
-Model–view–presenter (MVP) is a derivation of the model–view–controller (MVC) architectural pattern which mostly used for building user interfaces. In MVP, the presenter assumes the functionality of the “middle-man”. In MVP, all presentation logic is pushed to the presenter. Check here for MVVM
+- androkotlinandroid-mvp-flow
+- This application demonstrated use of Room persistence storage with create, read, update and delete operation.
+-Model–view–presenter (MVP) is a derivation of the model–view–controller (MVC) architectural pattern which mostly used for building user interfaces. In MVP, the presenter assumes the functionality of the “middle-man”. In MVP, all presentation logic is pushed to the presenter.
 
 MVP Architecture with RxJava + Dagger2 + Retrofit2 +  using Kotlin. Includes
 
