@@ -57,6 +57,7 @@ class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListLi
                 }
                 R.id.navigation_favorites -> {
                     val intent = Intent(this, FavoritesActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                     overridePendingTransition(0,0)
                     return@OnNavigationItemSelectedListener true
