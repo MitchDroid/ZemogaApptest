@@ -100,8 +100,36 @@ class PostsListPresenter @Inject constructor(
         subscriptions.add(postsSubscription)
     }
 
+    override fun getUsers() {
+        checkViewAttached()
+        val postsSubscription = dataManager.getUsers()
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
+            .unsubscribeOn(schedulerProvider.io())
+            .mapNetworkErrors()
+            .subscribeBy(onError = {
+                displayErrorHandling(it)
+            }, onSuccess = {
+                val postsDao = dataSource.database.postDao()
+                postsDao.deleteAllUsers()
+                    .subscribeBy(onComplete = {
+                        Timber.d("Users  delete succeed")
+                        postsDao.insertUsers(it)
+                            .subscribeBy(onComplete = {
+                                Timber.d("Users  new records store succeed")
+                                getMvpView()?.showLoading(false)
+                            }, onError = {
+                                displayErrorHandling(it)
+                            })
+                    }, onError = {
+                        displayErrorHandling(it)
+                    })
+            })
+        subscriptions.add(postsSubscription)
+    }
+
     override fun goToItemaDetailsActivity(selectedItem: Post, context: Context) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        postsListNavigator.goToPostDetailsView(selectedItem.id, selectedItem.userId, context)
     }
 
     override fun deleteAllPostFromDB() {
@@ -127,6 +155,20 @@ class PostsListPresenter @Inject constructor(
                 }
             })
         subscriptions.add(dbSubscription)
+    }
+
+    override fun updateIsNewPost(postId: Int?, isNewPost: Boolean) {
+        checkViewAttached()
+        val favoriteSubscription = dataSource.database.postDao().updateNewPost(isNewPost, postId)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
+            .unsubscribeOn(schedulerProvider.io())
+            .subscribeBy(onComplete = {
+                Timber.d("=======IS NEW POST UPDATED SUCCESS")
+            },onError = {
+                getMvpView()?.showErrorView(it.toString())
+            })
+        subscriptions.add(favoriteSubscription)
     }
     /**
      * with exception classes mapped,

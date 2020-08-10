@@ -23,15 +23,16 @@ class PostsListAdapter @Inject constructor() : RecyclerView.Adapter<PostsListVie
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostsListViewHolder {
         mContext = parent.context
-        val inflatedView: View = parent.inflate(R.layout.post_list_item, false)
+        val inflatedView: View = parent.inflate(R.layout.default_list_item, false)
         return PostsListViewHolder(inflatedView, mPostsListListener)
     }
 
     override fun getItemCount() = postsList.size
 
-
     fun getSelectedItem(position: Int): Post {
-        return postsList[position]
+        val selectedPost = postsList[position]
+        selectedPost.isNewPost = false
+        return selectedPost
     }
 
     override fun onBindViewHolder(holder: PostsListViewHolder, position: Int) {

@@ -4,9 +4,14 @@ import android.app.Activity
 import android.content.Context
 import co.com.mjbarrerab.zemogaapptest.data.repository.DataSource
 import co.com.mjbarrerab.zemogaapptest.di.qualifier.ActivityContext
+import co.com.mjbarrerab.zemogaapptest.ui.favorites.FavoritesContract
+import co.com.mjbarrerab.zemogaapptest.ui.favorites.FavoritesPresenter
 import co.com.mjbarrerab.zemogaapptest.ui.posts.PostsListAdapter
 import co.com.mjbarrerab.zemogaapptest.ui.posts.PostsListContract
 import co.com.mjbarrerab.zemogaapptest.ui.posts.PostsListPresenter
+import co.com.mjbarrerab.zemogaapptest.ui.postsdetails.CommentsAdapter
+import co.com.mjbarrerab.zemogaapptest.ui.postsdetails.PostsDetailsContract
+import co.com.mjbarrerab.zemogaapptest.ui.postsdetails.PostsDetailsPresenter
 import co.com.mjbarrerab.zemogaapptest.utils.BaseSchedulerProvider
 import co.com.mjbarrerab.zemogaapptest.utils.SchedulerProvider
 import dagger.Module
@@ -41,6 +46,20 @@ class ActivityModule(activity: Activity) {
         )
     }
 
+    @Provides
+    fun providePostsDetailsPresenter(): PostsDetailsContract.Presenter {
+        return PostsDetailsPresenter(schedulerProvider = SchedulerProvider(),
+            subscriptions = CompositeDisposable()
+        )
+    }
+
+    @Provides
+    fun provideFavoritesPresenter(): FavoritesContract.Presenter {
+        return FavoritesPresenter(schedulerProvider = SchedulerProvider(),
+            subscriptions = CompositeDisposable()
+        )
+    }
+
 
     @Singleton
     @Provides
@@ -56,6 +75,9 @@ class ActivityModule(activity: Activity) {
 
     @Provides
     internal fun providePostListAdapter(): PostsListAdapter = PostsListAdapter()
+
+    @Provides
+    internal fun provideCommentsAdapter(): CommentsAdapter = CommentsAdapter()
 
     @Provides
     @Singleton

@@ -1,12 +1,12 @@
 package co.com.mjbarrerab.zemogaapptest.ui.posts
 
+import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import co.com.mjbarrerab.zemogaapptest.R
 import co.com.mjbarrerab.zemogaapptest.data.models.Post
 import co.com.mjbarrerab.zemogaapptest.ui.base.activity.BaseMVPActivity
+import co.com.mjbarrerab.zemogaapptest.ui.favorites.FavoritesActivity
 import kotlinx.android.synthetic.main.activity_posts.*
 import kotlinx.android.synthetic.main.activity_posts_content.*
 import javax.inject.Inject
@@ -25,9 +26,9 @@ class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListLi
     lateinit var postsListPresenter: PostsListPresenter
     @Inject
     lateinit var postsListAdapter: PostsListAdapter
-    lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var deleteIcon: Drawable
-    var mutableList: MutableList<Post> = mutableListOf()
+    private var mutableList: MutableList<Post> = mutableListOf()
     private var swipeBackground: ColorDrawable = ColorDrawable(Color.parseColor("#FF0000"))
 
     override fun getLayout(): Int {
@@ -43,18 +44,21 @@ class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListLi
         postsListPresenter.attachView(this)
         postsListAdapter.setPostsListListener(this)
         postsListPresenter.getPostFromDB()
+        postsListPresenter.getUsers()
 
         fab.setOnClickListener(this)
         ic_reload.setOnClickListener(this)
         deleteIcon = ContextCompat.getDrawable(this, R.drawable.ic_delete)!!
+
         nav_view.setOnNavigationItemSelectedListener OnNavigationItemSelectedListener@{ item ->
             when (item.itemId) {
-                R.id.navigation_home -> {
-                    //message.setText(R.string.title_home)
+                R.id.navigation_post -> {
                     return@OnNavigationItemSelectedListener true
                 }
-                R.id.navigation_dashboard -> {
-                    //message.setText(R.string.title_dashboard)
+                R.id.navigation_favorites -> {
+                    val intent = Intent(this, FavoritesActivity::class.java)
+                    startActivity(intent)
+                    overridePendingTransition(0,0)
                     return@OnNavigationItemSelectedListener true
                 }
             }
@@ -137,7 +141,10 @@ class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListLi
     }
 
     override fun showSelectedPostDetails(adapterPos: Int) {
-        Toast.makeText(this, "POSICION $adapterPos", Toast.LENGTH_SHORT).show()
+        val post = postsListAdapter.getSelectedItem(adapterPos)
+        postsListPresenter.updateIsNewPost(post.id, false)
+        postsListPresenter.goToItemaDetailsActivity(post, this)
+        postsListAdapter.notifyDataSetChanged()
     }
 
     override fun successPostsRequest(itemList: List<Post>) {
@@ -155,12 +162,10 @@ class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListLi
         showErrorMessage(root_layout, errorMessage)
     }
 
-    override fun showLoading(show: Boolean) {
-        if (show) {
-            progressbar.visibility = View.VISIBLE
-        } else {
-            progressbar.visibility = View.GONE
-        }
+    override fun showLoading(show: Boolean) = if (show) {
+        progressbar.visibility = View.VISIBLE
+    } else {
+         progressbar.visibility = View.GONE
     }
 
     override fun onDestroy() {
@@ -177,7 +182,6 @@ class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListLi
         when(v?.id){
             R.id.fab -> postsListPresenter.deleteAllPostFromDB()
             R.id.ic_reload -> postsListPresenter.getPostFromDB()
-
         }
     }
 

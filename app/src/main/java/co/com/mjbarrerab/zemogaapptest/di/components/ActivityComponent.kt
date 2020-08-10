@@ -5,7 +5,9 @@ package co.com.mjbarrerab.zemogaapptest.di.components
 import co.com.mjbarrerab.zemogaapptest.di.modules.ActivityModule
 import co.com.mjbarrerab.zemogaapptest.di.modules.NetworkModule
 import co.com.mjbarrerab.zemogaapptest.di.scope.ActivityScope
+import co.com.mjbarrerab.zemogaapptest.ui.favorites.FavoritesActivity
 import co.com.mjbarrerab.zemogaapptest.ui.posts.PostsListActivity
+import co.com.mjbarrerab.zemogaapptest.ui.postsdetails.PostsDetailsActivity
 import dagger.Component
 import javax.inject.Singleton
 
@@ -19,5 +21,7 @@ interface ActivityComponent {
 
     //Inject activities
     fun inject(postsListActivity: PostsListActivity)
+    fun inject(postsDetailsActivity: PostsDetailsActivity)
+    fun inject(favoritesActivity: FavoritesActivity)
 
 }

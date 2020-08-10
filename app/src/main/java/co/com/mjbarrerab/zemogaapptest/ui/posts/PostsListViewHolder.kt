@@ -2,7 +2,7 @@ package co.com.mjbarrerab.zemogaapptest.ui.posts
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.post_list_item.view.*
+import kotlinx.android.synthetic.main.default_list_item.view.*
 
 /**
  * Created by miller.barrera on 8/08/2020.

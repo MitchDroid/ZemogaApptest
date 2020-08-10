@@ -31,7 +31,10 @@ android {
         dev {
             buildConfigField 'String', 'HOST', '"https://jsonplaceholder.typicode.com"'
             buildConfigField 'String', 'POST', '"/posts"'
+            buildConfigField 'String', 'POST_BY_ID', '"/posts/{id}"'
+            buildConfigField 'String', 'USERS', '"/users"'
             buildConfigField 'String', 'USER_BY_ID', '"/users/{id}"'
+            buildConfigField 'String', 'COMMENTS_BY_POST_ID', '"/posts/{id}/comments"'
         }
     }
 }
@@ -42,6 +45,9 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$x_appcompat"
     implementation "androidx.constraintlayout:constraintlayout:$x_constraint"
     implementation "com.google.android.material:material:$x_materials"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation "androidx.test:runner:$x_runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$x_espresso"

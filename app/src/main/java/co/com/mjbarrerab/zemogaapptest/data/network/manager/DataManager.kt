@@ -2,6 +2,7 @@ package co.com.mjbarrerab.zemogaapptest.data.network.manager
 
 
 
+import co.com.mjbarrerab.zemogaapptest.data.models.Comments
 import co.com.mjbarrerab.zemogaapptest.data.models.Post
 import co.com.mjbarrerab.zemogaapptest.data.models.Users
 import co.com.mjbarrerab.zemogaapptest.data.network.remote.APIService
@@ -27,9 +28,23 @@ class DataManager @Inject constructor(private var APIService: APIService) {
     }
 
     /**
+     * Get Users
+     */
+    fun getUsers(): Single<List<Users>> {
+        return APIService.doGetUsers()
+    }
+
+    /**
      * Get Users by Id
      */
-    fun getUsersById(userId : String): Single<Users> {
+    fun getUsersById(userId : Int): Single<Users> {
         return APIService.doGetUsersById(userId)
+    }
+
+    /**
+     * Get Comments by Post Id
+     */
+    fun getCommentsByPostId(postId : Int): Single<List<Comments>>  {
+        return APIService.doGetCommentsByPostId(postId)
     }
 }
