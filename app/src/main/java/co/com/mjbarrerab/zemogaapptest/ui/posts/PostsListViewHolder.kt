@@ -25,7 +25,7 @@ class PostsListViewHolder(v: View, postsListListener: PostsListListener) : Recyc
         if (isNewPost)
             view.img_blue_circle.visibility = View.VISIBLE
         else
-            view.img_blue_circle.visibility = View.INVISIBLE
+            view.img_blue_circle.visibility = View.GONE
 
         view.tv_title.text = title
     }

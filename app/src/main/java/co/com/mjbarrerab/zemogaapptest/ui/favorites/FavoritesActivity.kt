@@ -47,6 +47,7 @@ class FavoritesActivity : BaseMVPActivity(), FavoritesContract.View, PostsListLi
         postsListAdapter.setPostsListListener(this)
         favoritesPresenter.getFavoritesFromDB()
 
+        nav_view_favorites.selectedItemId = R.id.navigation_favorites
         nav_view_favorites.setOnNavigationItemSelectedListener OnNavigationItemSelectedListener@{ item ->
             when (item.itemId) {
                 R.id.navigation_post -> {

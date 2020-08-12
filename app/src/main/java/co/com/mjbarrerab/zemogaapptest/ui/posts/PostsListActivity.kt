@@ -80,6 +80,7 @@ class PostsListActivity : BaseMVPActivity(), PostsListContract.View, PostsListLi
         })
 
 
+        nav_view.selectedItemId = R.id.navigation_post
         nav_view.setOnNavigationItemSelectedListener OnNavigationItemSelectedListener@{ item ->
             when (item.itemId) {
                 R.id.navigation_post -> {
